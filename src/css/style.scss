@@ -1,0 +1,924 @@
+html {
+  font-size: 62.5%;
+  height: 100%;
+  visibility: hidden;
+  // FOUT
+  &.wf-active {
+    visibility: visible;
+  }
+  body {
+    font-family: serif;
+    font-size: 1.6em;
+    line-height: 1.6;
+    color: #333;
+    background-image: url("../../image/main_background.png");
+    header {
+      background-color: #ffe3aa;
+      .header-inner-container {
+        display: flex;
+        height: 60px;
+        .logo {
+          background-image: url("../../image/logo.svg");
+          background-repeat: no-repeat;
+          background-position: center;
+          a {
+            display: block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+        .hn-container {
+          display: flex;
+          align-items: center;
+          .hn-item {
+            font-family: ro-shino-std, serif;
+            font-weight: 500;
+            font-style: normal;
+          }
+        }
+      }
+    }
+    main {
+      width: 100%;
+      max-width: 1800px;
+      height: 100%;
+      margin: 0 auto;
+      .slider {
+        position: relative;
+        max-height: 900px;
+        &::before {
+          content: "";
+          display: block;
+          padding-top: 75%;
+        }
+        .slider-img {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-position: center;
+          z-index: 1;
+          @keyframes cross-fade1 {
+            0% {opacity: 1;}
+            17% {opacity: 1;}
+            34% {opacity: 0;}
+            51% {opacity: 0;}
+            68% {opacity: 0;}
+            85% {opacity: 0;}
+            100% {opacity: 1;}
+          }
+          @keyframes cross-fade2 {
+            0% {opacity: 0;}
+            17% {opacity: 0;}
+            34% {opacity: 1;}
+            51% {opacity: 1;}
+            68% {opacity: 0;}
+            85% {opacity: 0;}
+            100% {opacity: 0;}
+          }
+          @keyframes cross-fade3 {
+            0% {opacity: 0;}
+            17% {opacity: 0;}
+            34% {opacity: 0;}
+            51% {opacity: 0;}
+            68% {opacity: 1;}
+            85% {opacity: 1;}
+            100% {opacity: 0;}
+          }
+          @for $i from 1 to 4 {
+            &.cross-fade#{$i} {
+              background-image: url("../../image/spring-top#{$i}.jpg");
+              animation: cross-fade#{$i} 15s ease-out infinite;
+              animation-delay: 3s;
+            }
+          }
+        }
+        .slider-text-container {
+          display: flex;
+          flex-direction: column-reverse;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          font-size: 1vw;
+          z-index: 4;
+          .slider-text {
+            @keyframes slider-text {
+              100% {
+                visibility: visible;
+                opacity: 1;
+              }
+            }
+            position: absolute;
+            color: #333;
+            background: rgba(255, 255, 255, .8);
+            white-space: nowrap;
+            writing-mode: vertical-rl;
+            letter-spacing: 3px;
+            transform: translate(-50%, -50%);
+            visibility: hidden;
+            opacity: 0;
+            &.loaded {
+              @for $i from 1 to 4 {
+                &:nth-of-type(#{$i}) {
+                  @if $i == 1 {
+                    animation: slider-text 1s forwards ease-out;
+                  } @else {
+                    animation: slider-text 1s forwards 1s * ($i - 1) ease-out;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      .sec {
+        background-color: #fff;
+        margin-top: 30px;
+        .title2 {
+          font-family: ro-shino-std, serif;
+          font-weight: 600;
+          font-style: normal;
+          font-size: 3.5rem;
+          color: #fff;
+          background-image: url("../../image/title-background.jpg");
+        }
+        .contents {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+        // 神道大社
+        &.sec1 {
+          position: relative;
+        }
+        // 季節の行事
+        &.sec2 {
+          .contents {
+            display: flex;
+            flex-wrap: wrap;
+            .tab-radio {
+              display: none;
+              &:checked + .tab-label {
+                font-weight: 900;
+                background-color: #eee;
+                & + .tab-contents {
+                  display: flex;
+                  .tab-item {
+                    padding: 0 10px;
+                    .tab-img {
+                      width: 100%;
+                      background-size: cover;
+                      background-position: center;
+                      margin: 20px auto 0;
+                      &::before {
+                        content: "";
+                        display: block;
+                        padding-top: 75%;
+                      }
+                      @for $i from 1 to 17 {
+                        &.tab#{$i} {
+                          background-image: url("../../image/tab-#{$i}.jpg");
+                        }
+                      }
+                    }
+                    .wrapper {
+                      .title3 {
+                        font-family: ro-shino-std, serif;
+                        font-weight: 400;
+                        font-style: normal;
+                        font-size: 3rem;
+                        margin: 20px 0 10px;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            .tab-label {
+              font-family: ta-kouran, serif;
+              font-size: 2.5rem;
+              writing-mode: vertical-rl;
+              order: -1;
+              transition: background-color .3s;
+              &:hover {
+                background: #eee;
+              }
+            }
+            .tab-contents {
+              display: none;
+            }
+          }
+        }
+        // 周辺観光地
+        &.sec3 {
+          .contents {
+            position: relative;
+            width: 100%;
+            padding: 10px;
+            .map-container {
+              display: flex;
+              position: relative;
+              width: 100%;
+              max-width: 1500px;
+              height: 100%;
+              max-height: 1125px;
+              background-image: url("../../image/map_ol.svg");
+              background-size: cover;
+              background-position: center;
+              margin: 0 auto;
+              &::before {
+                content: "";
+                display: block;
+                padding-top: 75%;
+              }
+              input[id^="map"] {
+                display: none;
+                &:checked + label {
+                  & + .map-contents {
+                    z-index: 1;
+                    opacity: 1;
+                  }
+                }
+              }
+              label[class^="map-pointer"] {
+                position: absolute;
+                display: block;
+                font-size: 1vw;
+                order: -1;
+                &::before {
+                  @keyframes pointer {
+                    0% {
+                      opacity: 0;
+                    }
+                    100% {
+                      opacity: 1;
+                    }
+                  }
+                  content: "\f3c5";
+                  font-family: "Font Awesome 5 Free";
+                  font-weight: 900;
+                  position: absolute;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+                  font-size: 3em;
+                  animation: pointer 2s infinite;
+                  @media(min-width: 1592px) {
+                    font-size: 48px;
+                  }
+                }
+                &.map-pointer1 {
+                  top: 39%;
+                  left: 7.9%;
+                  width: 26.8%;
+                  height: 18.6%;
+                  &::before {
+                    top: 18%;
+                  }
+                }
+                &.map-pointer2 {
+                  top: 33.8%;
+                  left: 68.4%;
+                  width: 26.2%;
+                  height: 23.7%;
+                  &::before {
+                    top: 20%;
+                  }
+                }
+                &.map-pointer3 {
+                  top: 3.5%;
+                  left: 47.2%;
+                  width: 5.8%;
+                  height: 56%;
+                  &::before {
+                    top: 8%;
+                  }
+                }
+              }
+              .map-contents {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                background-size: cover;
+                background-position: center;
+                opacity: 0;
+                z-index: -1;
+                transition: opacity .5s;
+                &::before {
+                  content: "";
+                  display: block;
+                  padding-top: 66%;
+                }
+                @for $i from 1 to 4 {
+                  &:nth-of-type(#{$i}) {
+                    background-image: url("../../image/map-img#{$i}.jpg");
+                  }
+                }
+                .layer {
+                  display: flex;
+                  justify-content: space-between;
+                  flex-direction: row-reverse;
+                  width: 100%;
+                  height: 100%;
+                  color: #fff;
+                  background: rgba(0, 0, 0, .7);
+                  overflow-x: hidden;
+                  .map-item-title {
+                    font-size: 2rem;
+                    background: rgba(0, 0, 0, .8);
+                    writing-mode: vertical-rl;
+                    letter-spacing: 3px;
+                    padding: 10px 5px;
+                  }
+                  .map-item-text {
+                    justify-self: flex-start;
+                    width: 100%;
+                    font-size: 1.8rem;
+                    writing-mode: vertical-rl;
+                    overflow-x: scroll;
+                    padding: 10px 0;
+                    margin: 0 5px;
+                    p {
+                      letter-spacing: 3px;
+                    }
+                  }
+                  .map-item-link {
+                    display: flex;
+                    align-items: center;
+                    align-self: flex-start;
+                    width: 30px;
+                    font-size: 1.5rem;
+                    writing-mode: vertical-rl;
+                    background-color: #000;
+                    padding: 10px 0;
+                  }
+                  .map-close {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 30px;
+                    height: 30px;
+                    background: #000;
+                    &:hover {
+                      cursor: pointer;
+                    }
+                    div {
+                      position: absolute;
+                      top: 50%;
+                      left: 50%;
+                      width: 15px;
+                      height: 2px;
+                      background-color: #fff;
+                      &:nth-of-type(1) {
+                        transform: translate(-50%, -50%) rotate(45deg);
+                      }
+                      &:nth-of-type(2) {
+                        transform: translate(-50%, -50%) rotate(-45deg);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        // アクセス
+        &.sec4 {
+          .contents {
+            .map-wrap {
+              position: relative;
+              &::before {
+                content: "";
+                display: block;
+                padding-top: 75%;
+              }
+              .map {
+                position: absolute;
+                top: 0;
+                left: 0;
+              }
+            }
+            .table-wrap {
+              .title3 {
+                font-size: 2rem;
+                font-weight: 600;
+                margin-bottom: 10px;
+              }
+              table {
+                border: 1px solid #333;
+                border-collapse: collapse;
+                border-spacing: 0;
+                tr {
+                  & * {
+                    text-align: center;
+                    vertical-align: middle;
+                    border: 1px solid #333;
+                    padding: 10px;
+                  }
+                  th {
+                    background-color: #eee;
+                  }
+                }
+                &:nth-of-type(1) {
+                  tr {
+                    td {
+                      text-align: left;
+                    }
+                  }
+                }
+                & + .title3 {
+                  margin-top: 30px;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    footer {
+      height: 100px;
+      line-height: 100px;
+      font-size: 2rem;
+      color: #333;
+      background-color: #ffe3aa;
+      text-align: center;
+      margin-top: 30px;
+    }
+  }
+}
+
+// SP
+@media(max-width: 699px) {
+  body {
+    header {
+      .header-inner-container {
+        justify-content: space-between;
+        position: relative;
+        .logo {
+          width: calc(100% - 60px);
+          max-width: 200px;
+        }
+        .hn-container {
+          flex-direction: column;
+          position: absolute;
+          top: 60px;
+          left: 0;
+          width: 100%;
+          z-index: 5;
+          &.close {
+            height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity .3s linear;
+          }
+          &.open {
+            opacity: 1;
+            transition: opacity .3s linear .3s;
+          }
+          &::after {
+            position: absolute;
+            top: 0;
+            left: 0;
+            content: "";
+            display: block;
+            width: 100%;
+            padding-bottom: 75%;
+            background: rgba(255, 255, 255, .65);
+            z-index: -1;
+          }
+          .hn-item {
+            font-size: 2.2rem;
+            margin-top: 15px;
+          }
+        }
+        .hamburger-btn {
+          position: relative;
+          width: 60px;
+          &.close {
+            .hamburger-line {
+              transition: 
+                top .2s .2s,
+                transform .2s
+                linear;
+              &:nth-of-type(1) {
+                top: 40%;
+              }
+              &:nth-of-type(2) {
+                top: 60%;
+              }
+            }
+          }
+          &.open {
+            .hamburger-line {
+              transition: 
+              top .2s,
+              transform .2s .2s
+              linear;
+              top: 50%;
+              &:nth-of-type(1) {
+                transform: rotate(45deg);
+              }
+              &:nth-of-type(2) {
+                transform: rotate(-45deg);
+              }
+            }
+          }
+          .hamburger-line {
+            position: absolute;
+            left: 25%;
+            width: 50%;
+            height: 2px;
+            background-color: #333;
+            transform: translateY(-50%);
+          }
+        }
+      }
+    }
+    main {
+      .slider {
+        .slider-text-container {
+          &.show {
+            opacity: 1;
+            transition: opacity .3s linear .3s;
+          }
+          &.hide {
+            opacity: 0;
+            transition: opacity .3s linear;
+          }
+          span {
+            font-size: 6em;
+            padding: 10px 0 7px;
+            &:nth-of-type(1) {
+              top: 35%;
+              left: 65%;
+            }
+            &:nth-of-type(2) {
+              top: 50%;
+              left: 50%;
+            }
+            &:nth-of-type(3) {
+              top: 65%;
+              left: 35%;
+            }
+          }
+        }
+      }
+      .sec {
+        .title2 {
+          padding: 0 15px;
+        }
+        .contents {
+          padding: 20px 0;
+        }
+        // 神道大社
+        &.sec1 {
+          position: relative;
+          .indicator {
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .4);
+            div {
+              position: absolute;
+              left: 50%;
+              width: 15px;
+              height: 15px;
+            }
+            &.down {
+              div {
+                @keyframes indicator-down {
+                  0% {
+                    opacity: 0;
+                    transform: translate(-50%, 0) rotate(-45deg);
+                  }
+                  100% {
+                    opacity: 1;
+                    transform: translate(-50%, 25px) rotate(-45deg);
+                  }
+                }
+                top: 0;
+                border-bottom: 3px solid #fff;
+                border-left: 3px solid #fff;
+                animation: indicator-down 1.5s infinite;
+              }
+            }
+            &.up {
+              div {
+                @keyframes indicator-up {
+                  0% {
+                    opacity: 0;
+                    transform: translate(-50%, 0) rotate(-45deg);
+                  }
+                  100% {
+                    opacity: 1;
+                    transform: translate(-50%, -25px) rotate(-45deg);
+                  }
+                }
+                bottom: 0;
+                border-top: 3px solid #fff;
+                border-right: 3px solid #fff;
+                animation: indicator-up 1.5s infinite;
+              }
+            }
+          }
+          .contents {
+            max-height: 400px;
+            overflow-y: scroll;
+            p {
+              line-height: 2;
+              letter-spacing: 2px;
+              & + p {
+                margin-top: 20px;
+              }
+            }
+          }
+        }
+        // 季節の行事
+        &.sec2 {
+          .contents {
+            .tab-label {
+              display: flex;
+              align-items: center;
+              width: calc(100% / 6);
+              padding: 10px 0;
+            }
+            .tab-contents {
+              scroll-snap-type: x mandatory;
+              overflow-x: scroll;
+              .tab-item {
+                flex: none;
+                width: 80%;
+                scroll-snap-align: start;
+                & + .tab-item {
+                  margin-left: 20px;
+                }
+              }
+            }
+          }
+        }
+        // 周辺観光地
+        &.sec3 {
+          .contents {
+            .map-container {
+              .layer {
+                .map-item-text {
+                  p {
+                    font-size: 1.6rem;
+                    line-height: 2;
+                    & + p {
+                      margin-right: 20px;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        // アクセス
+        &.sec4 {
+          .contents {
+            .map-wrap {
+              margin-bottom: 20px;
+              .map {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .table-wrap {
+              table {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// PC
+@media(min-width: 700px) {
+  body {
+    header {
+      .header-inner-container {
+        max-width: 1800px;
+        margin: 0 auto;
+        justify-content: space-between;
+        .logo {
+          width: 200px;
+          margin: 0 20px;
+        }
+        .hn-container {
+          justify-content: space-around;
+          width: calc(100% - 200px);
+          max-width: 1000px;
+          .hn-item {
+            width: calc(100% / 4);
+            font-size: 2rem;
+            border-left: 1px solid #000;
+            text-align: center;
+          }
+        }
+        .hamburger-btn {
+          display: none;
+        }
+      }
+    }
+    main {
+      .slider {
+        .slider-text-container {
+          span {
+            font-size: 4em;
+            padding: 25px 0 22px;
+            &:nth-of-type(1) {
+              top: 30%;
+              left: 60%;
+            }
+            &:nth-of-type(2) {
+              top: 45%;
+              left: 50%;
+            }
+            &:nth-of-type(3) {
+              top: 60%;
+              left: 40%;
+            }
+          }
+        }
+      }
+      .sec {
+        display: flex;
+        &:nth-of-type(even) {
+          flex-direction: row-reverse;
+        }
+        .title2 {
+          display: flex;
+          align-items: center;
+          width: 75px;
+          font-family: ro-shino-std, serif;
+          font-weight: 400;
+          font-style: normal;
+          font-size: 3rem;
+          writing-mode:vertical-rl;
+          padding: 15px 0;
+        }
+        .contents {
+          padding: 20px;
+          p {
+            line-height: 30px;
+            & + p {
+              margin-right: 10px;
+            }
+          }
+        }
+        // 神道大社
+        &.sec1 {
+          position: relative;
+          .indicator {
+            position: absolute;
+            top: 50%;
+            left: 5px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, .4);
+            div {
+              position: absolute;
+              top: 50%;
+              width: 15px;
+              height: 15px;
+            }
+            &.left {
+              div {
+                @keyframes indicator-down {
+                  0% {
+                    opacity: 0;
+                    transform: translate(0, -50%) rotate(45deg);
+                  }
+                  100% {
+                    opacity: 1;
+                    transform: translate(-25px, -50%) rotate(45deg);
+                  }
+                }
+                right: 0;
+                border-bottom: 3px solid #fff;
+                border-left: 3px solid #fff;
+                animation: indicator-down 1.5s infinite;
+              }
+            }
+            &.right {
+              div {
+                @keyframes indicator-up {
+                  0% {
+                    opacity: 0;
+                    transform: translate(0, -50%) rotate(45deg);
+                  }
+                  100% {
+                    opacity: 1;
+                    transform: translate(25px, -50%) rotate(45deg);
+                  }
+                }
+                left: 0;
+                border-top: 3px solid #fff;
+                border-right: 3px solid #fff;
+                animation: indicator-up 1.5s infinite;
+              }
+            }
+          }
+          .contents {
+            width: 100%;
+            writing-mode: vertical-rl;
+            max-height: 600px;
+            overflow-x: scroll;
+            p {
+              line-height: 2;
+              letter-spacing: 3px;
+              & + p {
+                margin-right: 50px;
+              }
+            }
+          }
+        }
+        // 季節の行事
+        &.sec2 {
+          .contents {
+            width: 100%;
+            justify-content: space-around;
+            .tab-label {
+              align-self: stretch;
+              width: 40px;
+              line-height: 40px;
+              padding: 10px 0;
+            }
+            .tab-contents {
+              width: 100%;
+              .tab-item {
+                width: 50%;
+              }
+            }
+          }
+        }
+        // 周辺観光地
+        &.sec3 {
+          .contents {
+            .layer {
+              .map-item-text {
+                p {
+                  line-height: 2.5;
+                  & + p {
+                    margin-right: 30px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        // アクセス
+        &.sec4 {
+          .contents {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            .map-wrap {
+              width: 49%;
+              .map {
+                width: 100%;
+                height: 100%;
+              }
+            }
+            .table-wrap {
+              width: 49%;
+              .title3 {
+                text-align: center;
+              }
+              table {
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(min-width: 1200px) {
+  .slider-text-container {
+    font-size: 50px !important;
+    span {
+      font-size: 1em !important; 
+    }
+  }
+  .indicator {
+    display: none;
+  }
+}
